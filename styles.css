@@ -1,10 +1,16 @@
 /* styles.css */
 :root {
     --primary-color: #1a73e8;
+    --primary-dark: #1557b0;
     --text-color: #202124;
     --secondary-text: #5f6368;
     --background: #ffffff;
     --card-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
+    --hover-shadow: 0 4px 8px 0 rgba(60,64,67,0.3);
+    --input-border: #dadce0;
+    --success-color: #34a853;
+    --warning-color: #fbbc04;
+    --error-color: #ea4335;
 }
 
 * {
@@ -20,12 +26,14 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    line-height: 1.5;
 }
 
 .container {
     max-width: 800px;
     margin: 2rem auto;
-    padding: 2rem;
+    padding: 1.5rem;
+    width: 100%;
 }
 
 header {
@@ -36,21 +44,27 @@ header {
 h1 {
     color: var(--text-color);
     font-size: 2rem;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
 }
 
 .subtitle {
     color: var(--secondary-text);
     max-width: 600px;
     margin: 0 auto;
-    line-height: 1.5;
+    font-size: 1.1rem;
 }
 
 .calculator-card {
     background: var(--background);
-    border-radius: 8px;
+    border-radius: 12px;
     box-shadow: var(--card-shadow);
     padding: 2rem;
+    transition: box-shadow 0.3s ease;
+}
+
+.calculator-card:hover {
+    box-shadow: var(--hover-shadow);
 }
 
 .input-section {
@@ -71,30 +85,73 @@ label {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    font-weight: 500;
 }
 
 .info-icon {
     color: var(--primary-color);
     cursor: help;
-    font-size: 16px;
+    font-size: 18px !important;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+}
+
+.info-icon:hover {
+    opacity: 1;
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.currency-symbol,
+.percentage-symbol {
+    position: absolute;
+    color: var(--secondary-text);
+    font-size: 1rem;
+    pointer-events: none;
+}
+
+.currency-symbol {
+    left: 12px;
+}
+
+.percentage-symbol {
+    right: 12px;
 }
 
 input {
+    width: 100%;
     padding: 0.75rem;
-    border: 1px solid #dadce0;
-    border-radius: 4px;
+    border: 1px solid var(--input-border);
+    border-radius: 8px;
     font-size: 1rem;
-    transition: border 0.2s;
+    transition: all 0.2s ease;
+    background: var(--background);
 }
 
 input:focus {
     outline: none;
     border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+    padding-left: 28px;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 .results-section {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1rem;
     margin-top: 2rem;
 }
@@ -104,12 +161,18 @@ input:focus {
     padding: 1.5rem;
     border-radius: 8px;
     text-align: center;
+    transition: transform 0.2s ease;
+}
+
+.result-card:hover {
+    transform: translateY(-2px);
 }
 
 .result-card h3 {
     color: var(--secondary-text);
     font-size: 0.9rem;
     margin-bottom: 0.5rem;
+    font-weight: 500;
 }
 
 .result-card p {
@@ -118,19 +181,25 @@ input:focus {
     font-weight: 500;
 }
 
-.required-budget {
-    grid-column: 1 / -1;
+.highlight {
     background: var(--primary-color);
     color: white;
+    grid-column: 1 / -1;
 }
 
-.required-budget h3 {
-    color: rgba(255, 255, 255, 0.9);
-}
-
-.required-budget p {
+.highlight h3,
+.highlight p {
     color: white;
+}
+
+.highlight p {
     font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.target-note {
+    font-size: 0.875rem;
+    opacity: 0.9;
 }
 
 footer {
@@ -148,14 +217,33 @@ footer {
     border-radius: 4px;
     font-size: 0.875rem;
     z-index: 1000;
+    max-width: 200px;
+    text-align: center;
 }
 
 @media (max-width: 600px) {
     .container {
         padding: 1rem;
+        margin: 1rem auto;
     }
 
     .calculator-card {
+        padding: 1.5rem;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+    }
+
+    .results-section {
+        grid-template-columns: 1fr;
+    }
+
+    .result-card {
         padding: 1rem;
     }
 }
