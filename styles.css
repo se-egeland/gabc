@@ -17,11 +17,14 @@
 body {
     background-color: #f8f9fa;
     color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .container {
     max-width: 800px;
-    margin: 0 auto;
+    margin: 2rem auto;
     padding: 2rem;
 }
 
@@ -38,6 +41,9 @@ h1 {
 
 .subtitle {
     color: var(--secondary-text);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.5;
 }
 
 .calculator-card {
@@ -62,6 +68,15 @@ h1 {
 label {
     color: var(--secondary-text);
     font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.info-icon {
+    color: var(--primary-color);
+    cursor: help;
+    font-size: 16px;
 }
 
 input {
@@ -77,32 +92,17 @@ input:focus {
     border-color: var(--primary-color);
 }
 
-button {
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
-    padding: 0.75rem 1.5rem;
-    border-radius: 4px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-button:hover {
-    background-color: #1557b0;
-}
-
 .results-section {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 1rem;
     margin-top: 2rem;
 }
 
 .result-card {
     background: #f8f9fa;
-    padding: 1rem;
-    border-radius: 4px;
+    padding: 1.5rem;
+    border-radius: 8px;
     text-align: center;
 }
 
@@ -116,4 +116,46 @@ button:hover {
     color: var(--text-color);
     font-size: 1.5rem;
     font-weight: 500;
+}
+
+.required-budget {
+    grid-column: 1 / -1;
+    background: var(--primary-color);
+    color: white;
+}
+
+.required-budget h3 {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.required-budget p {
+    color: white;
+    font-size: 2rem;
+}
+
+footer {
+    text-align: center;
+    margin-top: 2rem;
+    color: var(--secondary-text);
+    font-size: 0.9rem;
+}
+
+.tooltip {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    z-index: 1000;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 1rem;
+    }
+
+    .calculator-card {
+        padding: 1rem;
+    }
 }
