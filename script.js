@@ -1,11 +1,14 @@
 // script.js
 document.addEventListener('DOMContentLoaded', () => {
     // Get DOM elements
+    const monthlyBudgetInput = document.getElementById('monthly-budget');
     const avgCpcInput = document.getElementById('avg-cpc');
     const conversionRateInput = document.getElementById('conversion-rate');
-    const requiredClicksDisplay = document.getElementById('required-clicks');
+    const monthlyClicksDisplay = document.getElementById('monthly-clicks');
+    const estimatedConversionsDisplay = document.getElementById('estimated-conversions');
     const requiredBudgetDisplay = document.getElementById('required-budget');
-    const targetConversions = 50; // Fixed target
+    
+    const TARGET_CONVERSIONS = 50;
 
     function formatCurrency(number) {
         return new Intl.NumberFormat('en-US', {
@@ -16,31 +19,45 @@ document.addEventListener('DOMContentLoaded', () => {
         }).format(number);
     }
 
+    function formatNumber(number) {
+        return new Intl.NumberFormat('en-US').format(number);
+    }
+
     function calculateMetrics() {
-        // Get input values
+        const monthlyBudget = parseFloat(monthlyBudgetInput.value) || 0;
         const avgCpc = parseFloat(avgCpcInput.value) || 0;
         const conversionRate = parseFloat(conversionRateInput.value) || 0;
 
         if (avgCpc > 0 && conversionRate > 0) {
-            // Calculate required clicks for 50 conversions
-            // Formula: Required Clicks = Target Conversions / (Conversion Rate / 100)
-            const requiredClicks = Math.ceil(targetConversions / (conversionRate / 100));
+            // Calculate metrics
+            const monthlyClicks = Math.floor(monthlyBudget / avgCpc);
+            const estimatedConversions = Math.floor(monthlyClicks * (conversionRate / 100));
             
-            // Calculate required budget
-            // Formula: Required Budget = Required Clicks * Average CPC
+            // Calculate required clicks and budget for 50 conversions
+            const requiredClicks = Math.ceil(TARGET_CONVERSIONS / (conversionRate / 100));
             const requiredBudget = requiredClicks * avgCpc;
 
             // Update displays
-            requiredClicksDisplay.textContent = requiredClicks.toLocaleString();
+            monthlyClicksDisplay.textContent = formatNumber(monthlyClicks);
+            estimatedConversionsDisplay.textContent = formatNumber(estimatedConversions);
             requiredBudgetDisplay.textContent = formatCurrency(requiredBudget);
+
+            // Add visual feedback
+            if (estimatedConversions >= TARGET_CONVERSIONS) {
+                estimatedConversionsDisplay.style.color = 'var(--success-color)';
+            } else {
+                estimatedConversionsDisplay.style.color = 'var(--error-color)';
+            }
         } else {
-            requiredClicksDisplay.textContent = '-';
+            // Reset displays if inputs are invalid
+            monthlyClicksDisplay.textContent = '-';
+            estimatedConversionsDisplay.textContent = '-';
             requiredBudgetDisplay.textContent = '-';
         }
     }
 
     // Add input event listeners with validation
-    [avgCpcInput, conversionRateInput].forEach(input => {
+    [monthlyBudgetInput, avgCpcInput, conversionRateInput].forEach(input => {
         input.addEventListener('input', (e) => {
             // Remove any non-numeric characters except decimal point
             let value = e.target.value.replace(/[^\d.]/g, '');
@@ -78,7 +95,6 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Position tooltip near the icon
             const rect = e.target.getBoundingClientRect();
-            tooltip.style.position = 'absolute';
             tooltip.style.left = `${rect.left}px`;
             tooltip.style.top = `${rect.bottom + 5}px`;
             
