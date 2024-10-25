@@ -12,41 +12,46 @@
     <div class="container">
         <header>
             <h1>Google Ads Budget Calculator</h1>
-            <p class="subtitle">Calculate the budget needed for 50 conversions per month</p>
+            <p class="subtitle">Calculate the required monthly budget to achieve 50 conversions based on your average CPC and conversion rate</p>
         </header>
 
         <div class="calculator-card">
             <div class="input-section">
                 <div class="input-group">
-                    <label for="monthly-budget">Monthly Budget ($)</label>
-                    <input type="number" id="monthly-budget" placeholder="e.g., 15000">
+                    <label for="avg-cpc">
+                        Average CPC ($)
+                        <span class="info-icon" title="Your average cost per click">ⓘ</span>
+                    </label>
+                    <input type="number" id="avg-cpc" placeholder="e.g., 2.50" step="0.01" min="0">
                 </div>
                 <div class="input-group">
-                    <label for="avg-cpc">Average CPC ($)</label>
-                    <input type="number" id="avg-cpc" placeholder="e.g., 7">
+                    <label for="conversion-rate">
+                        Average Conversion Rate (%)
+                        <span class="info-icon" title="Your conversion rate percentage">ⓘ</span>
+                    </label>
+                    <input type="number" id="conversion-rate" placeholder="e.g., 3" step="0.01" min="0" max="100">
                 </div>
-                <div class="input-group">
-                    <label for="conversion-rate">Conversion Rate (%)</label>
-                    <input type="number" id="conversion-rate" placeholder="e.g., 3">
-                </div>
-                <button id="calculate-btn">Calculate</button>
             </div>
 
             <div class="results-section">
                 <div class="result-card">
-                    <h3>Monthly Clicks</h3>
-                    <p id="monthly-clicks">0</p>
+                    <h3>Required Clicks</h3>
+                    <p id="required-clicks">-</p>
                 </div>
                 <div class="result-card">
-                    <h3>Monthly Conversions</h3>
-                    <p id="monthly-conversions">0</p>
+                    <h3>Target Conversions</h3>
+                    <p id="target-conversions">50</p>
                 </div>
-                <div class="result-card">
-                    <h3>Budget Status</h3>
-                    <p id="budget-status">Enter values to calculate</p>
+                <div class="result-card required-budget">
+                    <h3>Required Monthly Budget</h3>
+                    <p id="required-budget">-</p>
                 </div>
             </div>
         </div>
+
+        <footer>
+            <p>Target: Minimum 50 conversions per month for statistical significance</p>
+        </footer>
     </div>
     <script src="script.js"></script>
 </body>
