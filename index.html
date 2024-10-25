@@ -1,0 +1,53 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Ads Budget Calculator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Google Ads Budget Calculator</h1>
+            <p class="subtitle">Calculate the budget needed for 50 conversions per month</p>
+        </header>
+
+        <div class="calculator-card">
+            <div class="input-section">
+                <div class="input-group">
+                    <label for="monthly-budget">Monthly Budget ($)</label>
+                    <input type="number" id="monthly-budget" placeholder="e.g., 15000">
+                </div>
+                <div class="input-group">
+                    <label for="avg-cpc">Average CPC ($)</label>
+                    <input type="number" id="avg-cpc" placeholder="e.g., 7">
+                </div>
+                <div class="input-group">
+                    <label for="conversion-rate">Conversion Rate (%)</label>
+                    <input type="number" id="conversion-rate" placeholder="e.g., 3">
+                </div>
+                <button id="calculate-btn">Calculate</button>
+            </div>
+
+            <div class="results-section">
+                <div class="result-card">
+                    <h3>Monthly Clicks</h3>
+                    <p id="monthly-clicks">0</p>
+                </div>
+                <div class="result-card">
+                    <h3>Monthly Conversions</h3>
+                    <p id="monthly-conversions">0</p>
+                </div>
+                <div class="result-card">
+                    <h3>Budget Status</h3>
+                    <p id="budget-status">Enter values to calculate</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
