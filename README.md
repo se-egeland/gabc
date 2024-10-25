@@ -26,3 +26,7 @@ The Google Ads Budget Calculator is a web-based tool designed to help advertiser
 
 3. **Visual Indicators**:
    - The estimated conversions field changes color to indicate whether the target of 50 conversions is met.
+  
+## Contributing
+
+Contributions are welcome! Please fork the repository and submit a pull request for any enhancements or bug fixes.
