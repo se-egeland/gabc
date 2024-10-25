@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const TARGET_CONVERSIONS = 50;
 
     function formatCurrency(number) {
+        if (isNaN(number) || number === 0) return '-';
         return new Intl.NumberFormat('en-US', {
             style: 'currency',
             currency: 'USD',
@@ -20,29 +21,39 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function formatNumber(number) {
+        if (isNaN(number) || number === 0) return '-';
         return new Intl.NumberFormat('en-US').format(number);
     }
 
     function calculateMetrics() {
+        // Get input values and convert to numbers
         const monthlyBudget = parseFloat(monthlyBudgetInput.value) || 0;
         const avgCpc = parseFloat(avgCpcInput.value) || 0;
         const conversionRate = parseFloat(conversionRateInput.value) || 0;
 
+        console.log('Calculating with:', { monthlyBudget, avgCpc, conversionRate }); // Debug log
+
         if (avgCpc > 0 && conversionRate > 0) {
-            // Calculate metrics
+            // Calculate current metrics
             const monthlyClicks = Math.floor(monthlyBudget / avgCpc);
             const estimatedConversions = Math.floor(monthlyClicks * (conversionRate / 100));
             
-            // Calculate required clicks and budget for 50 conversions
+            // Calculate required budget for 50 conversions
             const requiredClicks = Math.ceil(TARGET_CONVERSIONS / (conversionRate / 100));
             const requiredBudget = requiredClicks * avgCpc;
+
+            console.log('Results:', { // Debug log
+                monthlyClicks,
+                estimatedConversions,
+                requiredBudget
+            });
 
             // Update displays
             monthlyClicksDisplay.textContent = formatNumber(monthlyClicks);
             estimatedConversionsDisplay.textContent = formatNumber(estimatedConversions);
             requiredBudgetDisplay.textContent = formatCurrency(requiredBudget);
 
-            // Add visual feedback
+            // Visual feedback for conversion goal
             if (estimatedConversions >= TARGET_CONVERSIONS) {
                 estimatedConversionsDisplay.style.color = 'var(--success-color)';
             } else {
@@ -53,31 +64,53 @@ document.addEventListener('DOMContentLoaded', () => {
             monthlyClicksDisplay.textContent = '-';
             estimatedConversionsDisplay.textContent = '-';
             requiredBudgetDisplay.textContent = '-';
+            estimatedConversionsDisplay.style.color = 'var(--text-color)';
         }
     }
 
-    // Add input event listeners with validation
-    [monthlyBudgetInput, avgCpcInput, conversionRateInput].forEach(input => {
-        input.addEventListener('input', (e) => {
-            // Remove any non-numeric characters except decimal point
-            let value = e.target.value.replace(/[^\d.]/g, '');
-            
-            // Ensure only one decimal point
-            const decimalPoints = value.match(/\./g);
-            if (decimalPoints && decimalPoints.length > 1) {
-                value = value.replace(/\.(?=.*\.)/g, '');
+    // Function to handle input changes
+    function handleInput(e) {
+        const input = e.target;
+        let value = input.value.replace(/[^\d.]/g, '');
+        
+        // Ensure only one decimal point
+        const decimalPoints = value.match(/\./g);
+        if (decimalPoints && decimalPoints.length > 1) {
+            value = value.replace(/\.(?=.*\.)/g, '');
+        }
+
+        // For conversion rate, ensure it's not above 100
+        if (input === conversionRateInput && parseFloat(value) > 100) {
+            value = '100';
+        }
+
+        // Update input value
+        input.value = value;
+
+        // Calculate metrics
+        calculateMetrics();
+    }
+
+    // Add event listeners to inputs
+    monthlyBudgetInput.addEventListener('input', handleInput);
+    avgCpcInput.addEventListener('input', handleInput);
+    conversionRateInput.addEventListener('input', handleInput);
+
+    // Add blur event listeners to format numbers nicely when leaving the input
+    [monthlyBudgetInput, avgCpcInput].forEach(input => {
+        input.addEventListener('blur', (e) => {
+            const value = parseFloat(e.target.value);
+            if (!isNaN(value)) {
+                e.target.value = value.toFixed(2);
             }
-
-            // Update input value
-            e.target.value = value;
-
-            // For conversion rate, ensure it's not above 100
-            if (input === conversionRateInput && parseFloat(value) > 100) {
-                e.target.value = '100';
-            }
-
-            calculateMetrics();
         });
+    });
+
+    conversionRateInput.addEventListener('blur', (e) => {
+        const value = parseFloat(e.target.value);
+        if (!isNaN(value)) {
+            e.target.value = value.toFixed(2);
+        }
     });
 
     // Initialize tooltips
