@@ -6,51 +6,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Google Ads Budget Calculator</title>
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <header>
             <h1>Google Ads Budget Calculator</h1>
-            <p class="subtitle">Calculate the required monthly budget to achieve 50 conversions based on your average CPC and conversion rate</p>
+            <p class="subtitle">
+                Unlock your campaign's potential! Calculate the budget needed for 50+ conversions to leverage Google Ads' AI-powered bid strategies effectively.
+            </p>
         </header>
 
         <div class="calculator-card">
             <div class="input-section">
                 <div class="input-group">
-                    <label for="avg-cpc">
-                        Average CPC ($)
-                        <span class="info-icon" title="Your average cost per click">ⓘ</span>
+                    <label for="monthly-budget">
+                        Current Monthly Budget
+                        <span class="material-icons-round info-icon" title="Your current monthly advertising budget">info</span>
                     </label>
-                    <input type="number" id="avg-cpc" placeholder="e.g., 2.50" step="0.01" min="0">
+                    <div class="input-wrapper">
+                        <span class="currency-symbol">$</span>
+                        <input type="number" id="monthly-budget" placeholder="0.00" step="0.01" min="0">
+                    </div>
                 </div>
+
+                <div class="input-group">
+                    <label for="avg-cpc">
+                        Average CPC
+                        <span class="material-icons-round info-icon" title="Your average cost per click">info</span>
+                    </label>
+                    <div class="input-wrapper">
+                        <span class="currency-symbol">$</span>
+                        <input type="number" id="avg-cpc" placeholder="0.00" step="0.01" min="0">
+                    </div>
+                </div>
+
                 <div class="input-group">
                     <label for="conversion-rate">
-                        Average Conversion Rate (%)
-                        <span class="info-icon" title="Your conversion rate percentage">ⓘ</span>
+                        Conversion Rate (CVR)
+                        <span class="material-icons-round info-icon" title="Your average conversion rate">info</span>
                     </label>
-                    <input type="number" id="conversion-rate" placeholder="e.g., 3" step="0.01" min="0" max="100">
+                    <div class="input-wrapper">
+                        <input type="number" id="conversion-rate" placeholder="0.00" step="0.01" min="0" max="100">
+                        <span class="percentage-symbol">%</span>
+                    </div>
                 </div>
             </div>
 
             <div class="results-section">
                 <div class="result-card">
-                    <h3>Required Clicks</h3>
-                    <p id="required-clicks">-</p>
+                    <h3>Monthly Clicks</h3>
+                    <p id="monthly-clicks">-</p>
                 </div>
                 <div class="result-card">
-                    <h3>Target Conversions</h3>
-                    <p id="target-conversions">50</p>
+                    <h3>Estimated Conversions</h3>
+                    <p id="estimated-conversions">-</p>
                 </div>
-                <div class="result-card required-budget">
+                <div class="result-card highlight">
                     <h3>Required Monthly Budget</h3>
                     <p id="required-budget">-</p>
+                    <span class="target-note">for 50 conversions/month</span>
                 </div>
             </div>
         </div>
 
         <footer>
-            <p>Target: Minimum 50 conversions per month for statistical significance</p>
+            <p>💡 Tip: A minimum of 50 conversions per month is recommended for optimal AI-powered bidding performance.</p>
         </footer>
     </div>
     <script src="script.js"></script>
